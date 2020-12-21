@@ -4,28 +4,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.movies.R;
 import com.example.movies.pojo.MovieModel;
 
-public class MainActivity extends AppCompatActivity {
-    TextView movieNameTV;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener , MovieView{
+
+    MoviePresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movieNameTV = findViewById(R.id.textView);
 
+        getMoviewButton.setOnClickListener(this);
+        presenter = new MoviePresenter(this);
     }
 
-    public MovieModel getMovieFromDatabase(){
 
-        return new MovieModel("Lala Land", "24-10-1993","very happy",1);
+    @Override
+    public void onClick(View view) {
+
+        if(view.getId() == R.id.button){
+
+            presenter.getMovieName();
+        }
     }
 
-    public void getMovie(View view) {
+    @Override
+    public void onGetMovieName(String movieName) {
 
-        movieNameTV.setText(getMovieFromDatabase().getName());
+        movieNameTV.setText(movieName);
     }
 }
